@@ -1,0 +1,8 @@
+cmake
+cmake3
+gcc
+gcc-c++
+git
+make
+subversion
+zlib-devel
