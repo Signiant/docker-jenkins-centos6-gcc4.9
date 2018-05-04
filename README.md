@@ -1,5 +1,5 @@
 # docker-jenkins-centos6-gcc-4.9
-Container for a Jenkins build node that is used to build cmake projects
+Container for a Jenkins build node installed with gcc 4.9.x on CentOS 6
 
 ## Variables:
 
