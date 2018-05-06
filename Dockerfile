@@ -1,4 +1,4 @@
-FROM signiant/docker-jenkins-centos-base:centos6
+FROM signiant/docker-jenkins-centos6-java8
 MAINTAINER devops@signiant.com
 
 ENV BUILD_USER bldmgr
@@ -16,13 +16,14 @@ RUN yum install -y `cat /tmp/yum.packages.list`
 # Install c/c++ development tools
 RUN yum install -y centos-release-scl
 RUN yum install -y cmake3 devtoolset-3-gcc-c++ devtoolset-3-libstdc++-devel devtoolset-3-gdb python27
-RUN scl enable devtoolset-3 bash
-RUN printf "\nsource scl_source enable devtoolset-3\n" >> /root/.bashrc
-RUN printf "\nsource scl_source enable devtoolset-3\n" >> /home/$BUILD_USER/.bashrc
+RUN source scl_source enable python27 && pip install --upgrade pip
+
+RUN printf "\nsource scl_source enable devtoolset-3 python27\n" >> /root/.bashrc
+RUN printf "\nsource scl_source enable devtoolset-3 python27\n" >> /home/$BUILD_USER/.bashrc
 
 # Install umpire
 ENV UMPIRE_VERSION 0.5.4
-RUN pip install umpire==${UMPIRE_VERSION}
+RUN source scl_source enable python27 && pip install umpire==${UMPIRE_VERSION}
 
 # Make sure anything/everything we put in the build user's home dir is owned correctly
 RUN chown -R $BUILD_USER:$BUILD_USER_GROUP /home/$BUILD_USER
