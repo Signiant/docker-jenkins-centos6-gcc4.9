@@ -15,8 +15,16 @@ RUN yum install -y `cat /tmp/yum.packages.list`
 
 # Install c/c++ development tools
 RUN yum install -y centos-release-scl
-RUN yum install -y cmake3 devtoolset-3-gcc-c++ devtoolset-3-libstdc++-devel devtoolset-3-gdb python27
+RUN yum install -y devtoolset-3-gcc-c++ devtoolset-3-libstdc++-devel devtoolset-3-gdb python27
 RUN source scl_source enable python27 && pip install --upgrade pip
+
+# Install cmake3.12
+RUN mv /usr/bin/cmake /usr/bin/cmake2
+RUN mv /usr/bin/ccmake /usr/bin/ccmake2
+RUN wget https://cmake.org/files/v3.12/cmake-3.12.0-Linux-x86_64.tar.gz -O /tmp/cmake-3.12.0-Linux-x86_64.tar.gz
+RUN cd /usr/local/bin && \
+tar -xzf /tmp/cmake-3.12.0-Linux-x86_64.tar.gz
+RUN ln -s /usr/local/bin/cmake-3.12.0-Linux-x86_64/bin/cmake /usr/bin/cmake
 
 RUN printf "\nsource scl_source enable devtoolset-3 python27\n" >> /root/.bashrc
 RUN printf "\nsource scl_source enable devtoolset-3 python27\n" >> /home/$BUILD_USER/.bashrc
