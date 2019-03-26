@@ -24,15 +24,11 @@ RUN cd /usr/local/bin && \
 tar -xzf /tmp/cmake-3.12.0-Linux-x86_64.tar.gz
 RUN ln -s /usr/local/bin/cmake-3.12.0-Linux-x86_64/bin/cmake /usr/bin/cmake
 
-RUN yum install -y devtoolset-3-gcc-c++ devtoolset-3-libstdc++-devel devtoolset-3-gdb python27
-RUN source scl_source enable python27 && pip install --upgrade pip
-
-RUN printf "\nsource scl_source enable devtoolset-3 python27\n" >> /root/.bashrc
-RUN printf "\nsource scl_source enable devtoolset-3 python27\n" >> /home/$BUILD_USER/.bashrc
+RUN yum install -y devtoolset-3-gcc-c++ devtoolset-3-libstdc++-devel devtoolset-3-gdb python27 python-setuptools python-pip python-wheel
 
 # Install umpire
 ENV UMPIRE_VERSION 0.5.4
-RUN source scl_source enable python27 && pip install umpire==${UMPIRE_VERSION}
+RUN pip install umpire==${UMPIRE_VERSION}
 
 # Make sure anything/everything we put in the build user's home dir is owned correctly
 RUN chown -R $BUILD_USER:$BUILD_USER_GROUP /home/$BUILD_USER
