@@ -20,5 +20,5 @@ RUN ln -s /usr/local/bin/cmake-3.12.0-Linux-x86_64/bin/cmake /usr/bin/cmake
 RUN yum install -y devtoolset-3-gcc-c++ devtoolset-3-libstdc++-devel devtoolset-3-gdb python27 python-setuptools python-pip python-wheel
 
 # Install umpire
-ENV UMPIRE_VERSION 0.5.4
+ENV UMPIRE_VERSION 0.5.5
 RUN pip install umpire==${UMPIRE_VERSION}
